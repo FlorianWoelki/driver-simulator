@@ -27,9 +27,10 @@
         small
         color="blue lighten-2"
         v-for="menuItem in menuItems"
-        :key="menuItem"
+        :key="menuItem.icon"
+        @click="handleButtonClick(menuItem.url)"
       >
-        <v-icon>{{ menuItem }}</v-icon>
+        <v-icon>{{ menuItem.icon }}</v-icon>
       </v-btn>
     </v-speed-dial>
   </div>
@@ -48,8 +49,22 @@ export default {
       bottom: true,
       left: false,
       transition: 'slide-y-reverse-transition',
-      menuItems: ['dashboard']
+      menuItems: [
+        {
+          url: '/',
+          icon: 'dashboard'
+        },
+        {
+          url: '/information',
+          icon: 'info'
+        }
+      ]
     };
+  },
+  methods: {
+    handleButtonClick(url) {
+      this.$router.push(url);
+    }
   }
 };
 </script>
