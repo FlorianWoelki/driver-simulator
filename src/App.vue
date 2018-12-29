@@ -10,22 +10,20 @@
         </div>
       </v-card-title>
       <v-form class="container">
-        <!-- TODO: Make it easier, no nested if in :value -->
         <v-text-field
-          :value="pickupLocation === '' ? '' : (pickupLocation.lat + ', ' + pickupLocation.lng)"
+          :value="pickupLocation.lat === 0 ? '' : (pickupLocation.lat + ', ' + pickupLocation.lng)"
           label="Your pickup location"
           required
         >
         </v-text-field>
-        
-        <!-- TODO: Make it easier, no nested if in :value -->
+
         <v-text-field
-          :value="destinationLocation === '' ? '' : (destinationLocation.lat + ', ' + destinationLocation.lng)"
+          :value="destinationLocation.lat === 0 ? '' : (destinationLocation.lat + ', ' + destinationLocation.lng)"
           label="Your destination"
           required
         >
         </v-text-field>
-        
+
         <v-btn
           depressed
           large
@@ -49,10 +47,9 @@
       </l-marker>
 
       <l-marker
-        v-if="destinationLocation != ''"
+        v-if="destinationLocation.lat != 0"
         :lat-lng="destinationLocation"
       >
-        <!-- TODO: Go to data and look at object -->
       </l-marker>
     </l-map>
   </v-app>
@@ -74,8 +71,14 @@ export default {
       },
       haveUserLocation: false,
       zoom: 18,
-      pickupLocation: '', // TODO: Fix and initialize with normal object.. not working right now caused by the text field
-      destinationLocation: '' // TODO: Fix and initialize with normal object.. not working right now caused by the text field
+      pickupLocation: {
+        lat: 0,
+        lng: 0
+      },
+      destinationLocation: {
+        lat: 0,
+        lng: 0
+      }
     };
   },
   methods: {
