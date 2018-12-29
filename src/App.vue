@@ -2,7 +2,7 @@
 
 <template>
   <v-app>
-    <v-card>
+    <v-card class="location-card">
       <v-card-title primary-title>
         <div>
           <p class="headline">Welcome to Driver Simulation 🚖</p>
@@ -52,16 +52,20 @@
       >
       </l-marker>
     </l-map>
+
+    <Menu />
   </v-app>
 </template>
 
 <script>
 import { LMarker } from 'vue2-leaflet';
+import Menu from '@/components/Menu';
 
 export default {
   name: 'App',
   components: {
-    LMarker
+    LMarker,
+    Menu
   },
   data() {
     return {
@@ -122,7 +126,7 @@ export default {
 </script>
 
 <style lang="scss">
-.v-card {
+.location-card {
   position: absolute;
   top: 10px;
   right: 10px;
