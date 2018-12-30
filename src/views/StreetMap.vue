@@ -1,31 +1,32 @@
 <template>
-  <!-- TODO: Not able to surround l-map with div.. see if we can fix it.. -->
-  <l-map
-    :zoom="zoom"
-    :center="location"
-    @click="clickOnMap"
-  >
+  <div class="street-map">
     <LocationCard
       :pickupLocation="pickupLocation"
       :destinationLocation="destinationLocation"
     />
 
-    <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
-
-    <l-marker
-      v-if="haveUserLocation"
-      :lat-lng="location"
-      @click="chooseLocalLocation"
+    <l-map
+      :zoom="zoom"
+      :center="location"
+      @click="clickOnMap"
     >
-      <!--<l-popup :content="'<div>Your location was selected!</div>'"></l-popup>-->
-    </l-marker>
+      <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
 
-    <l-marker
-      v-if="destinationLocation.lat != 0"
-      :lat-lng="destinationLocation"
-    >
-    </l-marker>
-  </l-map>
+      <l-marker
+        v-if="haveUserLocation"
+        :lat-lng="location"
+        @click="chooseLocalLocation"
+      >
+        <!--<l-popup :content="'<div>Your location was selected!</div>'"></l-popup>-->
+      </l-marker>
+
+      <l-marker
+        v-if="destinationLocation.lat != 0"
+        :lat-lng="destinationLocation"
+      >
+      </l-marker>
+    </l-map>
+  </div>
 </template>
 
 <script>
@@ -95,3 +96,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.street-map .vue2leaflet-map {
+  position: absolute !important;
+}
+</style>
