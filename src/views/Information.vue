@@ -34,8 +34,7 @@
       >
         <v-card flat>
           <v-card-text>
-            <v-btn color="success">Call {{ props.item.name }} to You!</v-btn>
-            <v-btn color="error">Report driver</v-btn>
+            <DriverButtons :name="props.item.name" />
           </v-card-text>
         </v-card>
       </template>
@@ -44,8 +43,13 @@
 </template>
 
 <script>
+import DriverButtons from '@/components/DriverButtons';
+
 export default {
   name: 'Information',
+  components: {
+    DriverButtons
+  },
   data() {
     return {
       headers: [
