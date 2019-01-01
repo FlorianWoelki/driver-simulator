@@ -8,14 +8,14 @@
     </v-card-title>
     <v-form class="container">
       <v-text-field
-        :value="pickupLocation.lat === 0 ? '' : (pickupLocation.lat + ', ' + pickupLocation.lng)"
+        :value="pickupLocation.name"
         label="Your pickup location"
         required
       >
       </v-text-field>
 
       <v-text-field
-        :value="destinationLocation.lat === 0 ? '' : (destinationLocation.lat + ', ' + destinationLocation.lng)"
+        :value="destinationLocation.name"
         label="Your destination"
         required
       >
@@ -36,7 +36,6 @@ export default {
   props: ['pickupLocation', 'destinationLocation']
 };
 </script>
-
 
 <style lang="scss">
 .location-card {

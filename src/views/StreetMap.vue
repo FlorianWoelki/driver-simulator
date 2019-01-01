@@ -49,26 +49,62 @@ export default {
       zoom: 18,
       pickupLocation: {
         lat: 0,
-        lng: 0
+        lng: 0,
+        address: ''
       },
       destinationLocation: {
         lat: 0,
-        lng: 0
+        lng: 0,
+        address: ''
       }
     };
   },
   methods: {
     chooseLocalLocation() {
-      this.pickupLocation = {
-        lat: this.location.lat,
-        lng: this.location.lng
-      };
+      if (this.pickupLocation.address === '') {
+        this.pickupLocation.lat = this.location.lat;
+        this.pickupLocation.lng = this.location.lng;
+      }
+      fetch(
+        'https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' +
+          this.location.lat +
+          '&lon=' +
+          this.location.lng
+      )
+        .then(data => data.json())
+        .then(location => {
+          const splittedAddress = location.display_name.split(',');
+          const address =
+            splittedAddress[0].trim() + ', ' + splittedAddress[1].trim();
+          this.pickupLocation = {
+            lat: this.location.lat,
+            lng: this.location.lng,
+            name: address
+          };
+        });
     },
     clickOnMap(event) {
-      this.destinationLocation = {
-        lat: event.latlng.lat,
-        lng: event.latlng.lng
-      };
+      if (this.destinationLocation.address === '') {
+        this.destinationLocation.lat = event.latlng.lat;
+        this.destinationLocation.lng = event.latlng.lng;
+      }
+      fetch(
+        'https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' +
+          event.latlng.lat +
+          '&lon=' +
+          event.latlng.lng
+      )
+        .then(data => data.json())
+        .then(location => {
+          const splittedAddress = location.display_name.split(',');
+          const address =
+            splittedAddress[0].trim() + ', ' + splittedAddress[1].trim();
+          this.destinationLocation = {
+            lat: event.latlng.lat,
+            lng: event.latlng.lng,
+            name: address
+          };
+        });
     }
   },
   mounted() {

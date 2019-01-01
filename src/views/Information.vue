@@ -1,5 +1,6 @@
 <template>
   <div class="information container">
+    <h1>Information about driver in your near</h1>
     <v-data-table
       :headers="headers"
       :items="driver"
@@ -98,6 +99,11 @@ export default {
 .information {
   .v-avatar {
     margin: 10px;
+  }
+
+  h1 {
+    color: gray;
+    margin-bottom: 20px;
   }
 }
 </style>
