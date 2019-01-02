@@ -75,7 +75,11 @@ export default {
         .then(location => {
           const splittedAddress = location.display_name.split(',');
           const address =
-            splittedAddress[0].trim() + ', ' + splittedAddress[1].trim();
+            splittedAddress[1].trim() +
+            ' ' +
+            splittedAddress[0].trim() +
+            ', ' +
+            splittedAddress[2].trim();
           this.pickupLocation = {
             lat: this.location.lat,
             lng: this.location.lng,
@@ -98,7 +102,11 @@ export default {
         .then(location => {
           const splittedAddress = location.display_name.split(',');
           const address =
-            splittedAddress[0].trim() + ', ' + splittedAddress[1].trim();
+            splittedAddress[1].trim() +
+            ' ' +
+            splittedAddress[0].trim() +
+            ', ' +
+            splittedAddress[2].trim();
           this.destinationLocation = {
             lat: event.latlng.lat,
             lng: event.latlng.lng,
