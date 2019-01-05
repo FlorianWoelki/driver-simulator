@@ -25,6 +25,7 @@
         depressed
         large
         color="info"
+        :disabled="pickupLocation.name == '' || destinationLocation.name == ''"
       >Search for driver</v-btn>
     </v-form>
   </v-card>
