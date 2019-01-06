@@ -135,7 +135,8 @@ export default {
             };
             this.haveUserLocation = true;
           });
-      }
+      },
+      { timeout: 10000 }
     );
   }
 };
