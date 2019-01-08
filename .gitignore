@@ -1,5 +1,8 @@
 .DS_Store
 node_modules
+
+# Ignoring docs directory for deployment
+/docs
 /dist
 
 # Atom linter files
