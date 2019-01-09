@@ -25,13 +25,23 @@
         :lat-lng="destinationLocation"
       >
       </l-marker>
+
+      <l-marker
+        v-if="destinationLocation.lat != 0"
+        :lat-lng="destinationLocation"
+        :icon="icon"
+      >
+      </l-marker>
     </l-map>
   </div>
 </template>
 
 <script>
+import L from 'leaflet';
 import { LMarker } from 'vue2-leaflet';
 import LocationCard from '@/components/LocationCard';
+
+import carMarkerUrl from '@/assets/car-marker.png';
 
 export default {
   name: 'StreetMap',
@@ -56,7 +66,11 @@ export default {
         lat: 0,
         lng: 0,
         name: ''
-      }
+      },
+      icon: L.icon({
+        iconUrl: carMarkerUrl,
+        iconSize: [38, 38]
+      })
     };
   },
   methods: {
