@@ -26,12 +26,12 @@
       >
       </l-marker>
 
-      <l-marker
-        v-if="destinationLocation.lat != 0"
-        :lat-lng="destinationLocation"
+      <l-moving-marker
+        :lat-lng="movingMarkerLocation"
+        :duration="2000"
         :icon="icon"
       >
-      </l-marker>
+      </l-moving-marker>
     </l-map>
   </div>
 </template>
@@ -39,14 +39,22 @@
 <script>
 import L from 'leaflet';
 import { LMarker } from 'vue2-leaflet';
+import LMovingMarker from 'vue2-leaflet-movingmarker';
 import LocationCard from '@/components/LocationCard';
 
 import carMarkerUrl from '@/assets/car-marker.png';
+
+function rand(n) {
+  let max = n + 0.001;
+  let min = n - 0.001;
+  return Math.random() * (max - min) + min;
+}
 
 export default {
   name: 'StreetMap',
   components: {
     LMarker,
+    LMovingMarker,
     LocationCard
   },
   data() {
@@ -54,6 +62,10 @@ export default {
       location: {
         lat: 51.505,
         lng: -0.09
+      },
+      movingMarkerLocation: {
+        lat: rand(51.505),
+        lng: rand(-0.09)
       },
       haveUserLocation: false,
       zoom: 18,
@@ -152,6 +164,13 @@ export default {
       },
       { timeout: 10000 }
     );
+
+    setInterval(() => {
+      this.movingMarkerLocation = {
+        lat: rand(this.destinationLocation.lat),
+        lng: rand(this.destinationLocation.lng)
+      };
+    }, 2000);
   }
 };
 </script>
