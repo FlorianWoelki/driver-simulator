@@ -31,7 +31,7 @@
         :key="driver.id"
         :lat-lng="driver.location"
         :icon="icon"
-        :duration="2000"
+        :duration="5000"
       >
       </l-moving-marker>
 
@@ -75,15 +75,9 @@ export default {
             lat: 0,
             lng: 0
           }
-        },
-        {
-          id: 1,
-          location: {
-            lat: 0,
-            lng: 0
-          }
         }
       ],
+      driversLatLngs: [],
       polyline: {
         latLngs: [],
         color: 'green'
@@ -107,21 +101,50 @@ export default {
     };
   },
   methods: {
-    generateDriversLocation(latitude, longitude) {
+    setDriversLocation(index) {
       this.drivers.forEach(driver => {
-        let lat = this.getRandomLocation(latitude);
-        let lng = this.getRandomLocation(longitude);
-
         driver.location = {
-          lat: lat,
-          lng: lng
+          lat: this.driversLatLngs[index][0],
+          lng: this.driversLatLngs[index][1]
         };
       });
     },
-    getRandomLocation(n) {
-      let max = n + 0.001;
-      let min = n - 0.001;
-      return Math.random() * (max - min) + min;
+    getRandomRoute(latitude, longitude) {
+      const startCoordinates = this.getRandomLocation(latitude, longitude);
+      const endCoordinates = this.getRandomLocation(latitude, longitude);
+
+      fetch(
+        'https://api.openrouteservice.org/directions?api_key=' +
+          config.API_KEY +
+          '&coordinates=' +
+          startCoordinates.lng +
+          ',' +
+          startCoordinates.lat +
+          '|' +
+          endCoordinates.lng +
+          ',' +
+          endCoordinates.lat +
+          '&profile=driving-car&geometry=true&geometry_format=polyline'
+      )
+        .then(data => data.json())
+        .then(jsonData => {
+          jsonData.routes[0].geometry.forEach(geo => {
+            const latLng = L.latLng(geo[0], geo[1]);
+            this.driversLatLngs.push([latLng.lng, latLng.lat]);
+          });
+
+          this.setDriversLocation(0);
+        });
+    },
+    getRandomLocation(startLat, startLng) {
+      const maxLat = startLat + 0.01;
+      const minLat = startLat - 0.01;
+      const maxLng = startLng + 0.01;
+      const minLng = startLng - 0.01;
+      return {
+        lat: Math.random() * (maxLat - minLat) + minLat,
+        lng: Math.random() * (maxLng - minLng) + minLng
+      };
     },
     chooseLocalLocation() {
       if (this.pickupLocation.address === '') {
@@ -209,12 +232,18 @@ export default {
         };
         this.haveUserLocation = true;
 
+        this.getRandomRoute(
+          position.coords.latitude,
+          position.coords.longitude
+        );
+        let index = 0;
         setInterval(() => {
-          this.generateDriversLocation(
-            position.coords.latitude,
-            position.coords.longitude
-          );
-        }, 3000);
+          index++;
+          if (index == this.driversLatLngs.length) {
+            index = 0;
+          }
+          this.setDriversLocation(index);
+        }, 5500);
       },
       () => {
         // Didn't give the location
@@ -227,7 +256,15 @@ export default {
             };
             this.haveUserLocation = true;
 
-            this.generateDriversLocation();
+            this.getRandomRoute(location.latitude, location.longitude);
+            let index = 0;
+            setInterval(() => {
+              index++;
+              if (index == this.driversLatLngs.lengt) {
+                index = 0;
+              }
+              this.setDriversLocation(index);
+            }, 3000);
           });
       },
       { timeout: 10000 }
