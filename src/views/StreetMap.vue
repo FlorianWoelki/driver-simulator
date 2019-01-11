@@ -27,6 +27,7 @@
       </l-marker>
 
       <l-moving-marker
+        v-if="movingMarkerLocation.lat != 0"
         :lat-lng="movingMarkerLocation"
         :duration="2000"
         :icon="icon"
@@ -52,12 +53,6 @@ import LocationCard from '@/components/LocationCard';
 import { config } from '@/config.js';
 import carMarkerUrl from '@/assets/car-marker.png';
 
-function rand(n) {
-  let max = n + 0.001;
-  let min = n - 0.001;
-  return Math.random() * (max - min) + min;
-}
-
 export default {
   name: 'StreetMap',
   components: {
@@ -73,8 +68,8 @@ export default {
         lng: -0.09
       },
       movingMarkerLocation: {
-        lat: rand(51.505),
-        lng: rand(-0.09)
+        lat: 0,
+        lng: 0
       },
       polyline: {
         latLngs: [],
@@ -172,6 +167,23 @@ export default {
                 const latLng = L.latLng(geo[0], geo[1]);
                 this.polyline.latLngs.push([latLng.lng, latLng.lat]);
               });
+
+              this.movingMarkerLocation = {
+                lat: this.polyline.latLngs[0][0],
+                lng: this.polyline.latLngs[0][1]
+              };
+
+              let i = 1;
+              setInterval(() => {
+                if (i == this.polyline.latLngs.length) {
+                  i = 0;
+                }
+                this.movingMarkerLocation = {
+                  lat: this.polyline.latLngs[i][0],
+                  lng: this.polyline.latLngs[i][1]
+                };
+                i++;
+              }, 3000);
             });
         });
     }
@@ -199,13 +211,6 @@ export default {
       },
       { timeout: 10000 }
     );
-
-    setInterval(() => {
-      this.movingMarkerLocation = {
-        lat: rand(this.destinationLocation.lat),
-        lng: rand(this.destinationLocation.lng)
-      };
-    }, 2000);
   }
 };
 </script>
