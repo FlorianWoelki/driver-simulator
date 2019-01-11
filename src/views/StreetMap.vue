@@ -27,10 +27,11 @@
       </l-marker>
 
       <l-moving-marker
-        v-if="movingMarkerLocation.lat != 0"
-        :lat-lng="movingMarkerLocation"
-        :duration="2000"
+        v-for="driver in drivers"
+        :key="driver.id"
+        :lat-lng="driver.location"
         :icon="icon"
+        :duration="2000"
       >
       </l-moving-marker>
 
@@ -67,10 +68,22 @@ export default {
         lat: 51.505,
         lng: -0.09
       },
-      movingMarkerLocation: {
-        lat: 0,
-        lng: 0
-      },
+      drivers: [
+        {
+          id: 0,
+          location: {
+            lat: 0,
+            lng: 0
+          }
+        },
+        {
+          id: 1,
+          location: {
+            lat: 0,
+            lng: 0
+          }
+        }
+      ],
       polyline: {
         latLngs: [],
         color: 'green'
@@ -94,6 +107,22 @@ export default {
     };
   },
   methods: {
+    generateDriversLocation(latitude, longitude) {
+      this.drivers.forEach(driver => {
+        let lat = this.getRandomLocation(latitude);
+        let lng = this.getRandomLocation(longitude);
+
+        driver.location = {
+          lat: lat,
+          lng: lng
+        };
+      });
+    },
+    getRandomLocation(n) {
+      let max = n + 0.001;
+      let min = n - 0.001;
+      return Math.random() * (max - min) + min;
+    },
     chooseLocalLocation() {
       if (this.pickupLocation.address === '') {
         this.pickupLocation.lat = this.location.lat;
@@ -167,23 +196,6 @@ export default {
                 const latLng = L.latLng(geo[0], geo[1]);
                 this.polyline.latLngs.push([latLng.lng, latLng.lat]);
               });
-
-              this.movingMarkerLocation = {
-                lat: this.polyline.latLngs[0][0],
-                lng: this.polyline.latLngs[0][1]
-              };
-
-              let i = 1;
-              setInterval(() => {
-                if (i == this.polyline.latLngs.length) {
-                  i = 0;
-                }
-                this.movingMarkerLocation = {
-                  lat: this.polyline.latLngs[i][0],
-                  lng: this.polyline.latLngs[i][1]
-                };
-                i++;
-              }, 3000);
             });
         });
     }
@@ -196,6 +208,13 @@ export default {
           lng: position.coords.longitude
         };
         this.haveUserLocation = true;
+
+        setInterval(() => {
+          this.generateDriversLocation(
+            position.coords.latitude,
+            position.coords.longitude
+          );
+        }, 3000);
       },
       () => {
         // Didn't give the location
@@ -207,6 +226,8 @@ export default {
               lng: location.longitude
             };
             this.haveUserLocation = true;
+
+            this.generateDriversLocation();
           });
       },
       { timeout: 10000 }
