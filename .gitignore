@@ -1,6 +1,9 @@
 .DS_Store
 node_modules
 
+# Hide secret config
+config.js
+
 # Ignoring docs directory for deployment
 /docs
 /dist

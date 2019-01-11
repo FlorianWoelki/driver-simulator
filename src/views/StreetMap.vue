@@ -32,16 +32,24 @@
         :icon="icon"
       >
       </l-moving-marker>
+
+      <l-polyline
+        :lat-lngs="polyline.latLngs"
+        :color="polyline.color"
+        :fill="false"
+      >
+      </l-polyline>
     </l-map>
   </div>
 </template>
 
 <script>
 import L from 'leaflet';
-import { LMarker } from 'vue2-leaflet';
+import { LMarker, LPolyline } from 'vue2-leaflet';
 import LMovingMarker from 'vue2-leaflet-movingmarker';
 import LocationCard from '@/components/LocationCard';
 
+import { config } from '@/config.js';
 import carMarkerUrl from '@/assets/car-marker.png';
 
 function rand(n) {
@@ -55,6 +63,7 @@ export default {
   components: {
     LMarker,
     LMovingMarker,
+    LPolyline,
     LocationCard
   },
   data() {
@@ -66,6 +75,10 @@ export default {
       movingMarkerLocation: {
         lat: rand(51.505),
         lng: rand(-0.09)
+      },
+      polyline: {
+        latLngs: [],
+        color: 'green'
       },
       haveUserLocation: false,
       zoom: 18,
@@ -138,6 +151,28 @@ export default {
             lng: event.latlng.lng,
             name: address
           };
+
+          fetch(
+            'https://api.openrouteservice.org/directions?api_key=' +
+              config.API_KEY +
+              '&coordinates=' +
+              this.pickupLocation.lng +
+              ',' +
+              this.pickupLocation.lat +
+              '|' +
+              this.destinationLocation.lng +
+              ',' +
+              this.destinationLocation.lat +
+              '&profile=driving-car&geometry=true&geometry_format=polyline'
+          )
+            .then(data => data.json())
+            .then(jsonData => {
+              this.polyline.latLngs = [];
+              jsonData.routes[0].geometry.forEach(geo => {
+                const latLng = L.latLng(geo[0], geo[1]);
+                this.polyline.latLngs.push([latLng.lng, latLng.lat]);
+              });
+            });
         });
     }
   },
