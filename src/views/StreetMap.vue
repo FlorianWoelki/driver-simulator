@@ -27,7 +27,7 @@
       </l-marker>
 
       <l-moving-marker
-        v-for="driver in drivers"
+        v-for="driver in getValidDrivers"
         :key="driver.id"
         :lat-lng="driver.location"
         :icon="icon"
@@ -221,6 +221,11 @@ export default {
               });
             });
         });
+    }
+  },
+  computed: {
+    getValidDrivers() {
+      return this.drivers.filter(driver => driver.location.lat != 0);
     }
   },
   mounted() {
