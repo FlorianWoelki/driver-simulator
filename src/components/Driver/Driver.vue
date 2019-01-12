@@ -1,47 +1,69 @@
 <template>
   <div class="driver">
-    <l-moving-marker
+    <div
       v-for="driver in getValidDrivers"
       :key="driver.id"
-      :lat-lng="driver.location"
-      :icon="icon"
-      :duration="5000"
     >
-    </l-moving-marker>
+      <l-moving-marker
+        :lat-lng="driver.location"
+        :icon="driver.icon"
+        :duration="5000"
+        @click="showDriverInformation(driver)"
+      >
+      </l-moving-marker>
+
+      <DriverSidebar
+        :driver="driver"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import L from 'leaflet';
 import LMovingMarker from 'vue2-leaflet-movingmarker';
+import DriverSidebar from '@/components/Driver/DriverSidebar';
 
 import { config } from '@/config.js';
 import carMarkerUrl from '@/assets/car-marker.png';
+import selectedCarMarkerUrl from '@/assets/selected-car-marker.png';
+
+const carMarkerIcon = L.icon({
+  iconUrl: carMarkerUrl,
+  iconSize: [38, 38]
+});
+const selectedCarMarkerIcon = L.icon({
+  iconUrl: selectedCarMarkerUrl,
+  iconSize: [38, 38]
+});
 
 export default {
   props: ['startLocation'],
   components: {
-    LMovingMarker
+    LMovingMarker,
+    DriverSidebar
   },
   data() {
     return {
       drivers: [
         {
           id: 0,
+          selected: false,
           location: {
             lat: 0,
             lng: 0
-          }
+          },
+          icon: carMarkerIcon
         }
       ],
-      driversLatLngs: [],
-      icon: L.icon({
-        iconUrl: carMarkerUrl,
-        iconSize: [38, 38]
-      })
+      driversLatLngs: []
     };
   },
   methods: {
+    showDriverInformation(driver) {
+      driver.selected = !driver.selected;
+      driver.icon = driver.selected ? selectedCarMarkerIcon : carMarkerIcon;
+    },
     setDriversLocation(index) {
       this.drivers.forEach(driver => {
         driver.location = {

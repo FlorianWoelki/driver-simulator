@@ -42,7 +42,7 @@
 import L from 'leaflet';
 import { LMarker, LPolyline } from 'vue2-leaflet';
 import LocationCard from '@/components/LocationCard';
-import Driver from '@/components/Driver';
+import Driver from '@/components/Driver/Driver';
 
 import { config } from '@/config.js';
 
