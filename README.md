@@ -80,14 +80,15 @@ You can set your pickup and destination location and will draw a route for you.
 
 ## Contributing
 
-If you want to contribute to this project, just visit the `contribute` file.
+If you want to contribute to this project, just visit the `CONTRIBUTING` file.
 
 Here is a easy way to contribute:
 1. Fork the Project
 2. Create your feature branch (`git checkout -b feature/AwesomeFeature`)
-3. Commt your changes (`git commit -m "Added some amazing features`)
-4. Push to the Branch (`git push origin feature/AwesomeFeature`)
-5. Open a Pull Request
+3. When finished use lint (`npm run lint`)
+4. Commt your changes (`git commit -m "Added some amazing features`)
+5. Push to the Branch (`git push origin feature/AwesomeFeature`)
+6. Open a Pull Request
 
 
 
