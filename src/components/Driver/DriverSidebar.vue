@@ -8,7 +8,7 @@
           stateless
           value="true"
         >
-          <h1 class="headline">Information about Driver</h1>
+          <p>Current Location: {{ this.driverAddress }}</p>
         </v-navigation-drawer>
       </v-card>
     </transition>
@@ -21,9 +21,36 @@ export default {
   props: ['driver'],
   data() {
     return {
-      //
+      driverAddress: ''
     };
-  }
+  },
+  methods: {
+    updateCurrentDriverLocation() {
+      fetch(
+        'https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' +
+          this.driver.location.lat +
+          '&lon=' +
+          this.driver.location.lng
+      )
+        .then(data => data.json())
+        .then(location => {
+          const splittedAddress = location.display_name.split(',');
+          const address =
+            splittedAddress[1].trim() +
+            ' ' +
+            splittedAddress[0].trim() +
+            ', ' +
+            splittedAddress[2].trim();
+          this.driverAddress = address;
+        });
+    }
+  },
+  mounted() {
+    this.updateCurrentDriverLocation();
+    setInterval(() => {
+      this.updateCurrentDriverLocation();
+    }, 10000);
+  },
 };
 </script>
 
@@ -42,8 +69,8 @@ export default {
     z-index: 9999;
     margin: 100px 0 0 25px;
 
-    h1 {
-      color: gray;
+    p {
+      font-size: 18px;
     }
   }
 }
