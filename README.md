@@ -25,7 +25,7 @@
 * [👨‍💻 VueJS](https://vuejs.org)
 * [📁 Vuetify](https://vuetifyjs.com/en/)
 * [🏁 Nominatim](https://nominatim.openstreetmap.org/)
-* [🧭 OpenRouteService](https://openrouteservice.org/)
+* [🚲 OpenRouteService](https://openrouteservice.org/)
 
 
 
