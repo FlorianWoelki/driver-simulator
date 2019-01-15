@@ -31,7 +31,7 @@
 
 ## Getting Started
 
-The first step is to clone the project locally.
+This guide will get you started with driver-simulator!
 
 ### Prerequisites
 
