@@ -104,6 +104,8 @@ export default {
             lng: this.location.lng,
             name: address
           };
+
+          this.chooseStreetPath();
         });
     },
     clickOnMap(event) {
@@ -132,28 +134,33 @@ export default {
             name: address
           };
 
-          fetch(
-            'https://api.openrouteservice.org/directions?api_key=' +
-              config.API_KEY +
-              '&coordinates=' +
-              this.pickupLocation.lng +
-              ',' +
-              this.pickupLocation.lat +
-              '|' +
-              this.destinationLocation.lng +
-              ',' +
-              this.destinationLocation.lat +
-              '&profile=driving-car&geometry=true&geometry_format=polyline'
-          )
-            .then(data => data.json())
-            .then(jsonData => {
-              this.polyline.latLngs = [];
-              jsonData.routes[0].geometry.forEach(geo => {
-                const latLng = L.latLng(geo[0], geo[1]);
-                this.polyline.latLngs.push([latLng.lng, latLng.lat]);
-              });
-            });
+          this.chooseStreetPath();
         });
+    },
+    chooseStreetPath() {
+      if (this.pickupLocation.lat != 0 && this.destinationLocation.lat != 0) {
+        fetch(
+          'https://api.openrouteservice.org/directions?api_key=' +
+            config.API_KEY +
+            '&coordinates=' +
+            this.pickupLocation.lng +
+            ',' +
+            this.pickupLocation.lat +
+            '|' +
+            this.destinationLocation.lng +
+            ',' +
+            this.destinationLocation.lat +
+            '&profile=driving-car&geometry=true&geometry_format=polyline'
+        )
+          .then(data => data.json())
+          .then(jsonData => {
+            this.polyline.latLngs = [];
+            jsonData.routes[0].geometry.forEach(geo => {
+              const latLng = L.latLng(geo[0], geo[1]);
+              this.polyline.latLngs.push([latLng.lng, latLng.lat]);
+            });
+          });
+      }
     }
   },
   mounted() {

@@ -50,7 +50,7 @@ export default {
     setInterval(() => {
       this.updateCurrentDriverLocation();
     }, 10000);
-  },
+  }
 };
 </script>
 
