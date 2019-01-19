@@ -8,7 +8,9 @@
           stateless
           value="true"
         >
+          <p>Name: {{ this.fullName }}</p>
           <p>Current Location: {{ this.driverAddress }}</p>
+          <p>Price: {{ this.pricePerKm }}€/km</p>
         </v-navigation-drawer>
       </v-card>
     </transition>
@@ -21,7 +23,9 @@ export default {
   props: ['driver'],
   data() {
     return {
-      driverAddress: ''
+      fullName: 'Peter Gregon',
+      driverAddress: '',
+      pricePerKm: 1.68
     };
   },
   methods: {
