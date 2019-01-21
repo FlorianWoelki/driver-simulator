@@ -11,6 +11,8 @@
           <p>Name: {{ this.fullName }}</p>
           <p>Current Location: {{ this.driverAddress }}</p>
           <p>Price: {{ this.pricePerKm }}€/km</p>
+
+          <DriverReliabilityChart />
         </v-navigation-drawer>
       </v-card>
     </transition>
@@ -18,9 +20,14 @@
 </template>
 
 <script>
+import DriverReliabilityChart from '@/components/Driver/DriverReliabilityChart';
+
 export default {
   name: 'DriverSidebar',
   props: ['driver'],
+  components: {
+    DriverReliabilityChart
+  },
   data() {
     return {
       fullName: 'Peter Gregon',
