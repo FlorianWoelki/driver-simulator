@@ -10,8 +10,10 @@
     "deploy": "node ./node_modules/vue-gh-pages/index.js"
   },
   "dependencies": {
+    "chart.js": "^2.7.3",
     "leaflet-geosearch": "^2.7.0",
     "vue": "^2.5.17",
+    "vue-chartjs": "^3.4.0",
     "vue-router": "^3.0.1",
     "vue2-leaflet": "^1.2.3",
     "vue2-leaflet-movingmarker": "0.0.1",
