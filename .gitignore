@@ -5,7 +5,6 @@ node_modules
 config.js
 
 # Ignoring docs directory for deployment
-/docs
 /dist
 
 # Atom linter files
