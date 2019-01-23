@@ -1,7 +1,10 @@
 <template>
   <div class="driver-sidebar">
     <transition name="fade">
-      <v-card v-if="driver.selected" class="d-inline-block elevation-12 pa-3">
+      <v-card 
+        v-if="driver.selected" 
+        class="d-inline-block elevation-12 pa-3"
+      >
         <v-navigation-drawer
           floating
           permanent
@@ -67,6 +70,11 @@ export default {
 
 <style lang="scss">
 .driver-sidebar {
+  position: absolute;
+  top: 100px;
+  left: 10px;
+  z-index: 9999;
+
   .fade-enter,
   .fade-leave-to {
     opacity: 0;
@@ -77,9 +85,6 @@ export default {
   }
 
   .v-card {
-    z-index: 9999;
-    margin: 100px 0 0 25px;
-
     p {
       font-size: 18px;
     }
