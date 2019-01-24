@@ -26,6 +26,7 @@
 * [📁 Vuetify](https://vuetifyjs.com/en/)
 * [🏁 Nominatim](https://nominatim.openstreetmap.org/)
 * [🚲 OpenRouteService](https://openrouteservice.org/)
+* [📈 Chart.js](https://www.chartjs.org/)
 
 
 
@@ -104,6 +105,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 * [Vuetify](https://vuetifyjs.com/en/)
 * [Nominatim](https://nominatim.openstreetmap.org/)
 * [OpenRouteService](https://openrouteservice.org/)
+* [Chart.js](https://www.chartjs.org/)
 
 
 
