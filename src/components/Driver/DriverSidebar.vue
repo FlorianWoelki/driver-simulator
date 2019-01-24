@@ -1,23 +1,18 @@
 <template>
   <div class="driver-sidebar">
     <transition name="fade">
-      <v-card 
-        v-if="driver.selected" 
-        class="d-inline-block elevation-12 pa-3"
+      <v-navigation-drawer
+        floating
+        permanent
+        stateless
+        value="true"
       >
-        <v-navigation-drawer
-          floating
-          permanent
-          stateless
-          value="true"
-        >
-          <p>Name: {{ this.fullName }}</p>
-          <p>Current Location: {{ this.driverAddress }}</p>
-          <p>Price: {{ this.pricePerKm }}€/km</p>
+        <p>Name: {{ this.fullName }}</p>
+        <p>Current Location: {{ this.driverAddress }}</p>
+        <p>Price: {{ this.pricePerKm }}€/km</p>
 
-          <DriverReliabilityChart />
-        </v-navigation-drawer>
-      </v-card>
+        <DriverReliabilityChart />
+      </v-navigation-drawer>
     </transition>
   </div>
 </template>
@@ -70,11 +65,6 @@ export default {
 
 <style lang="scss">
 .driver-sidebar {
-  position: absolute;
-  top: 100px;
-  left: 10px;
-  z-index: 9999;
-
   .fade-enter,
   .fade-leave-to {
     opacity: 0;
@@ -84,10 +74,8 @@ export default {
     transition: opacity 0.35s;
   }
 
-  .v-card {
-    p {
-      font-size: 18px;
-    }
+  p {
+    font-size: 18px;
   }
 }
 </style>

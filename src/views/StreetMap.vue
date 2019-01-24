@@ -17,7 +17,6 @@
         :lat-lng="location"
         @click="chooseLocalLocation"
       >
-        <!--<l-popup :content="'<div>Your location was selected!</div>'"></l-popup>-->
       </l-marker>
 
       <l-marker

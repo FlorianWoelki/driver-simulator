@@ -10,11 +10,10 @@
         :duration="5000"
         @click="showDriverInformation(driver)"
       >
+        <l-popup>
+          <DriverSidebar :driver="driver" />
+        </l-popup>
       </l-moving-marker>
-
-      <DriverSidebar
-        :driver="driver"
-      />
     </div>
   </div>
 </template>

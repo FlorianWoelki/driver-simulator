@@ -3,11 +3,12 @@ import './plugins/vuetify';
 import App from './App.vue';
 import router from './router';
 
-import { L, LMap, LTileLayer } from 'vue2-leaflet';
+import { L, LMap, LTileLayer, LPopup } from 'vue2-leaflet';
 import 'leaflet/dist/leaflet.css';
 
 Vue.component('l-map', LMap);
 Vue.component('l-tile-layer', LTileLayer);
+Vue.component('l-popup', LPopup);
 
 delete L.Icon.Default.prototype._getIconUrl;
 
