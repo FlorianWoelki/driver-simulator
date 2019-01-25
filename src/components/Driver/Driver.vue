@@ -52,7 +52,10 @@ export default {
             lat: 0,
             lng: 0
           },
-          icon: carMarkerIcon
+          icon: carMarkerIcon,
+          fullName: 'Peter Gregon',
+          driverAddress: '',
+          pricePerKm: 1.68
         }
       ],
       driversLatLngs: []

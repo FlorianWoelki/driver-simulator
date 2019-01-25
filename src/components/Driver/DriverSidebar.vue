@@ -7,9 +7,9 @@
         stateless
         value="true"
       >
-        <p>Name: {{ this.fullName }}</p>
-        <p>Current Location: {{ this.driverAddress }}</p>
-        <p>Price: {{ this.pricePerKm }}€/km</p>
+        <p>Name: {{ this.driver.fullName }}</p>
+        <p>Current Location: {{ this.driver.driverAddress }}</p>
+        <p>Price: {{ this.driver.pricePerKm }}€/km</p>
 
         <DriverReliabilityChart />
       </v-navigation-drawer>
@@ -25,13 +25,6 @@ export default {
   props: ['driver'],
   components: {
     DriverReliabilityChart
-  },
-  data() {
-    return {
-      fullName: 'Peter Gregon',
-      driverAddress: '',
-      pricePerKm: 1.68
-    };
   },
   methods: {
     updateCurrentDriverLocation() {
@@ -50,7 +43,7 @@ export default {
             splittedAddress[0].trim() +
             ', ' +
             splittedAddress[2].trim();
-          this.driverAddress = address;
+          this.driver.driverAddress = address;
         });
     }
   },
