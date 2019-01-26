@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <h1>{{ $store.state.test }}</h1>
     <router-view />
     <Menu />
   </v-app>
